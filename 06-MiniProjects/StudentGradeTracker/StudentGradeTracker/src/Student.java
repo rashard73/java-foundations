@@ -20,19 +20,14 @@ public class Student {
     }
 
     public void setGrades(double[] grades){
-
         this.grades = grades;
-
-
     }
 
     public double[] getGrades(){
-
         return grades;
     }
 
     public String getName(){
-
         return name;
     }
 
