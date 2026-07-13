@@ -10,8 +10,10 @@ public class Main{
 
         for (int i = 0; i < studentArray.length; i++){
             Student student = new Student();
-            inputData(student);
+            inputStudentName(student);
+            inputGrades(student);
             studentArray[i] = student;
+            System.out.println();
         }
 
         System.out.println("\n========== Student Report ==========");
@@ -20,24 +22,33 @@ public class Main{
             student.displayResults();
             System.out.println();
         }
-
-
-        }
-    public static void inputData(Student student){
+    }
+    public static void inputStudentName(Student student){
 
         System.out.print("Please enter a students name: ");
         String name = scanner.nextLine();
         student.setName(name);
 
+    }
+
+    public static void inputGrades(Student student){
         System.out.print("How many grades would you like to enter for this student? ");
         int numOfGrades = scanner.nextInt();
         scanner.nextLine();
-        student.setGrades(numOfGrades);
-        System.out.println();
 
+        double [] grades = new double[numOfGrades];
+
+        System.out.print("Please enter " + grades.length +" of the students grades: ");
+        for(int i=0; i < grades.length; i++){
+            grades[i]= scanner.nextDouble();
         }
-
+        scanner.nextLine();
+        student.setGrades(grades);
     }
+}
+
+
+
 
 
 

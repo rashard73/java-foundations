@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 import java.util.Arrays;
 
 public class Student {
@@ -15,27 +15,24 @@ public class Student {
         this.grades = new double [0];
     }
 
-    public static Scanner scanner = new Scanner(System.in);
-
     public void setName(String name){
         this.name = name;
     }
 
-    public void setGrades(int numOfGrades){
+    public void setGrades(double[] grades){
 
-        this.grades = new double[numOfGrades];
+        this.grades = grades;
 
-        System.out.print("Please enter " + grades.length +" of the students grades: ");
-        for(int i=0; i < grades.length; i++){
-            this.grades[i]= scanner.nextDouble();
-        }
+
     }
 
     public double[] getGrades(){
+
         return grades;
     }
 
     public String getName(){
+
         return name;
     }
 
