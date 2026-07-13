@@ -1,53 +1,43 @@
 import java.util.Scanner;
-import java.util.Arrays;
-
-public class Main {
-
+public class Main{
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        String studentName = getName();
+       System.out.print("How many students do you have? ");
+        int numOfStudents = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.print("How many grades would you like to enter? ");
-        int numberOfGrades = scanner.nextInt();
+        Student [] studentArray = new Student [numOfStudents];
 
-        double[] studentGrades = new double[numberOfGrades];
-        getGrades(studentGrades);
+        for (int i = 0; i < studentArray.length; i++){
+            Student student = new Student();
+            inputData(student);
+            studentArray[i] = student;
+        }
 
-        double averageGrade = calculateAverage(studentGrades);
+        System.out.println("\n========== Student Report ==========");
 
-        displayResults(studentName, studentGrades, averageGrade);
+        for (Student student : studentArray){
+            student.displayResults();
+            System.out.println();
         }
 
 
-        public static String getName(){
-            System.out.print("Please enter the students name: ");
-            return scanner.nextLine();
+        }
+    public static void inputData(Student student){
+
+        System.out.print("Please enter a students name: ");
+        String name = scanner.nextLine();
+        student.setName(name);
+
+        System.out.print("How many grades would you like to enter for this student? ");
+        int numOfGrades = scanner.nextInt();
+        scanner.nextLine();
+        student.setGrades(numOfGrades);
+        System.out.println();
+
         }
 
-        public static void getGrades(double [] studentGrades){
-            System.out.print("Please enter " + studentGrades.length +" of the students grades: ");
-            for(int i=0; i < studentGrades.length; i++){
-                studentGrades[i]= scanner.nextDouble();
-            }
-        }
-
-        public static double calculateAverage(double [] studentGrades){
-            double total = 0;
-            for (double studentGrade : studentGrades) {
-                total += studentGrade;
-            }
-            return total / studentGrades.length;
-        }
-
-        public static void displayResults(String studentName, double[] studentGrades, double averageGrade ){
-            System.out.println("Students name: " + studentName);
-            System.out.println("Students grades: " + Arrays.toString(studentGrades));
-            System.out.printf("Students average: %.2f ", averageGrade);
-
-            if(averageGrade >= 65.00){
-                System.out.print("This student has passed!");
-            }else{
-                System.out.print("This student has failed.");
-            }
-        }
     }
+
+
+
