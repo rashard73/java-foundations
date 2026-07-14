@@ -32,6 +32,10 @@ public class Student {
     }
 
     public double calculateAverage(){
+        if (grades.length == 0){
+            return  0.0;
+        }
+
         double total = 0;
         for (double studentGrade : this.grades) {
             total += studentGrade;
@@ -39,15 +43,14 @@ public class Student {
         return total / grades.length;
     }
 
+    public boolean hasPassed(){
+        return calculateAverage() >= 65;
+    }
+
     public void displayResults(){
         System.out.println("Students name: " + this.name);
         System.out.println("Students grades: " + Arrays.toString(this.grades));
         System.out.printf("Students average: %.2f ", calculateAverage());
-
-        if(calculateAverage() >= 65.00){
-            System.out.println("This student has passed!");
-        }else{
-            System.out.println("This student has failed.");
-        }
+        System.out.println("Status: " + (hasPassed() ? "PASS" : "FAIL"));
     }
 }
