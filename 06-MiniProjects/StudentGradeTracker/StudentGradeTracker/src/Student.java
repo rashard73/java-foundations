@@ -48,9 +48,58 @@ public class Student {
     }
 
     public void displayResults(){
-        System.out.println("Students name: " + this.name);
-        System.out.println("Students grades: " + Arrays.toString(this.grades));
-        System.out.printf("Students average: %.2f ", calculateAverage());
+        double average = calculateAverage();
+
+        System.out.println("Student's name: " + this.name);
+        System.out.println("Student's grades: " + Arrays.toString(this.grades));
+        System.out.printf("Student's average: %.2f%n ", average);
         System.out.println("Status: " + (hasPassed() ? "PASS" : "FAIL"));
     }
+
+    public static double calculateClassAverage(Student [] students){
+        double total = 0;
+
+        for (Student student : students){
+            total += student.calculateAverage();
+        }
+
+        return total / students.length;
+    }
+
+    public static double findHighestAverage(Student [] students){
+        double highestAverage = students[0].calculateAverage();
+
+        for (Student student : students){
+            if(highestAverage < student.calculateAverage()){
+                highestAverage = student.calculateAverage();
+            }
+        }
+
+        return highestAverage;
+    }
+
+    public static double findLowestAverage(Student [] students){
+        double lowestAverage = students[0].calculateAverage();
+
+        for (Student student : students){
+            if(lowestAverage > student.calculateAverage()){
+                lowestAverage = student.calculateAverage();
+            }
+        }
+
+        return lowestAverage;
+    }
+
+    public static int countPassingStudents(Student [] students){
+        int numPassed = 0;
+
+        for (Student student : students){
+            if(student.hasPassed()){
+                numPassed++;
+            }
+        }
+
+        return numPassed;
+    }
+
 }
