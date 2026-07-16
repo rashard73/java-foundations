@@ -1,31 +1,36 @@
 # Student Grade Tracker
 
-A Java console application that stores multiple students, records their
-grades, calculates averages, and reports pass/fail results.
+A Java console application that allows users to manage student grades and generate class statistics.
 
 ## Features
 
-- Supports multiple students
-- Supports a variable number of grades
-- Calculates student and class averages
-- Displays pass/fail status
-- Validates user input
+- Add multiple students
+- Enter student grades
+- Calculate individual averages
+- Determine pass/fail status
+- Display class average
+- Display highest and lowest averages
+- Count students who passed
 
-## Java Concepts Used
+## Technologies
 
-- Classes and objects
-- Encapsulation
-- Constructors
+- Java
+- Object-Oriented Programming
 - Arrays
 - Methods
-- Loops
-- Conditionals
-- Input validation
+- Input Validation
 
-## How to Run
+## What I Learned
 
-1. Compile the files:
-   javac Main.java Student.java
+- Designing classes and objects
+- Separating responsibilities
+- Writing reusable methods
+- Working with arrays of objects
+- Validating user input
 
-2. Run the application:
-   java Main
+## Future Improvements
+
+- Save data to a file
+- GUI version
+- Database integration
+- Spring Boot REST API
