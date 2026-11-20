@@ -1,110 +1,148 @@
 import java.util.Scanner;
-public class Main{
-    public static Scanner scanner = new Scanner(System.in);
+
+public class Main {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
-       String prompt = "How many students are in your class? ";
-        int numOfStudents = readPositiveInteger(prompt);
+        System.out.println("=== Student Grade Tracker ===");
 
-        Student [] studentArray = new Student [numOfStudents];
+        boolean running = true;
 
-        for (int i = 0; i < studentArray.length; i++){
-            Student student = new Student();
-            inputStudentName(student);
-            inputGrades(student);
-            studentArray[i] = student;
-            System.out.println();
-        }
-        displayStudentReport(studentArray);
-        displayClassSummary(studentArray);
+        while (running) {
 
+            System.out.println("\n1. Enter student grades");
+            System.out.println("2. Exit");
 
-    }
-    public static void inputStudentName(Student student){
+            int choice = readIntegerInRange(
+                    "Choose an option: ", 1, 2
+            );
 
-        System.out.print("Please enter a students name: ");
-        String name = scanner.nextLine();
-        student.setName(name);
+            switch (choice) {
+                case 1:
+                    createStudent();
+                    break;
 
-    }
-
-    public static void inputGrades(Student student) {
-        int numberOfGrades = readPositiveInteger("How many grades would you like to enter for this student? ");
-
-        double[] grades = new double[numberOfGrades];
-
-        for (int i = 0; i < grades.length; i++) {
-            System.out.printf("Grade %d of %d:%n", i + 1, grades.length);
-            grades[i] = readGrade();
-        }
-
-        scanner.nextLine();
-        student.setGrades(grades);
-    }
-
-    public static double readGrade(){
-        while(true){
-            System.out.print("Enter a grade between 0 and 100: ");
-
-            if(!scanner.hasNextDouble()){
-                System.out.print("Invalid input. Please enter a number.");
-                scanner.nextLine();
-                continue;
+                case 2:
+                    running = false;
+                    System.out.println("Goodbye!");
+                    break;
             }
-
-            double grade = scanner.nextDouble();
-
-            if(grade >= 0 && grade <= 100){
-                return grade;
-            }
-
-            System.out.println("Grade must be between 0 and 100.");
         }
+
+        scanner.close();
     }
 
-    public static int readPositiveInteger(String prompt) {
+    private static void createStudent() {
+
+        String name = readStudentName();
+
+        int count = readIntegerInRange(
+                "How many grades? ", 1, Integer.MAX_VALUE
+        );
+
+        double[] grades = new double[count];
+
+        for (int i = 0; i < count; i++) {
+
+            grades[i] = readGrade(
+                    "Enter grade " + (i + 1) + ": "
+            );
+        }
+
+        Student student = new Student(name, grades);
+
+        displayStudent(student);
+    }
+
+    private static String readStudentName() {
+
         while (true) {
+
+            System.out.print("Enter student name: ");
+
+            String name = scanner.nextLine().trim();
+
+            if (!name.isEmpty()) {
+                return name;
+            }
+
+            System.out.println(
+                    "Name cannot be empty. Please try again."
+            );
+        }
+    }
+
+    private static int readIntegerInRange(
+            String prompt, int min, int max) {
+
+        while (true) {
+
             System.out.print(prompt);
 
-            if (!scanner.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a whole number.");
-                scanner.nextLine();
-                continue;
+            String input = scanner.nextLine().trim();
+
+            try {
+                int value = Integer.parseInt(input);
+
+                if (value >= min && value <= max) {
+                    return value;
+                }
+
+            } catch (NumberFormatException e) {
+                // Invalid input: show the message below.
             }
 
-            int number = scanner.nextInt();
-            scanner.nextLine();
-
-            if (number > 0) {
-                return number;
-            }
-
-            System.out.println("The number must be greater than zero.");
+            System.out.println(
+                    "Enter a whole number between "
+                            + min + " and " + max + "."
+            );
         }
     }
 
-    public static void displayStudentReport(Student [] students){
-        System.out.println("\n========== Student Report ==========");
+    private static double readGrade(String prompt) {
 
-        for (Student student : students){
-            student.displayResults();
-            System.out.println();
+        while (true) {
+
+            System.out.print(prompt);
+
+            String input = scanner.nextLine().trim();
+
+            try {
+                double grade = Double.parseDouble(input);
+
+                if (Double.isFinite(grade)
+                        && grade >= 0
+                        && grade <= 100) {
+                    return grade;
+                }
+
+            } catch (NumberFormatException e) {
+                // Invalid input: show the message below.
+            }
+
+            System.out.println(
+                    "Invalid grade. Enter a number from 0 to 100."
+            );
         }
     }
 
-    public static void displayClassSummary(Student[] students){
-        System.out.println("\n ========== Class Summary ==========");
+    private static void displayStudent(Student student) {
 
-        System.out.printf("Class average: %.2f%n", Student.calculateClassAverage(students));
-        System.out.printf("Highest average: %.2f%n", Student.findHighestAverage(students));
-        System.out.printf("lowest average: %.2f%n", Student.findLowestAverage(students));
-        System.out.println("Students passed: " + Student.countPassingStudents(students));
-        System.out.println("Students failed: " + (students.length - Student.countPassingStudents(students)));
+        System.out.println("\n=== Student Report ===");
+
+        System.out.println("Name: " + student.getName());
+
+        System.out.print("Grades: ");
+
+        for (double grade : student.getGrades()) {
+            System.out.print(grade + " ");
+        }
+
+        System.out.printf(
+                "%nAverage: %.2f%n",
+                student.calculateAverage()
+        );
     }
 }
-
-
-
-
-
-
